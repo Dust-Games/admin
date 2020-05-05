@@ -1,32 +1,41 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <v-app id="inspire">
+    <Auth v-if="!isAuthenticated" />
+
+    <div v-else>
+      <Nav v-model="drawer" />
+
+      <v-app-bar app color="light-blue darken-3" dark>
+        <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+        <v-toolbar-title>Dust Games. Админ-панель</v-toolbar-title>
+      </v-app-bar>
+
+      <v-content>
+        <router-view />
+      </v-content>
     </div>
-    <router-view />
-  </div>
+  </v-app>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script lang="ts">
+import Vue from "vue";
+import { mapGetters } from "vuex";
+// import HelloWorld from "./components/HelloWorld.vue";
 
-#nav {
-  padding: 30px;
+export default Vue.extend({
+  name: "App",
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+  components: {
+    Auth: () => import("./views/Auth.vue"),
+    Nav: () => import("./components/Nav.vue")
+  },
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-</style>
+  computed: {
+    ...mapGetters(["isAuthenticated"])
+  },
+
+  data: () => ({
+    drawer: null
+  })
+});
+</script>
