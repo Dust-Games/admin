@@ -9,12 +9,10 @@
       </v-col>
       <v-card class="pa-2" outlined tile>5656</v-card>
 
-      <div>
-        Админ: папвап
-      </div>
       <v-btn text small color="normal">Выйти</v-btn>
+
       <v-list dense>
-        <v-list-item link>
+        <v-list-item link @click="onToAccounts">
           <v-list-item-action>
             <v-icon>mdi-home</v-icon>
           </v-list-item-action>
@@ -60,6 +58,16 @@ export default Vue.extend({
         this.$emit("change", val);
       }
     }
+  },
+
+  methods: {
+    onToAccounts() {
+      this.$router.push({ name: "Accounts" });
+    }
+
+    // onToTransactions() {
+    //   this.$router.push({ name: "Accounts" });
+    // }
   }
 });
 </script>

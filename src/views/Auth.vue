@@ -11,8 +11,8 @@
             <!-- Форма -->
             <v-card-text>
               <v-form ref="form" v-model="valid" :lazy-validation="lazy">
-                <v-text-field label="Login" v-model="username" required type="text" />
-                <v-text-field label="Password" v-model="password" required type="password" />
+                <v-text-field label="Email" v-model="email" required type="text" />
+                <v-text-field label="Пароль" v-model="password" required type="password" />
               </v-form>
             </v-card-text>
             <!-- Кнопка подтверждения -->
@@ -51,7 +51,7 @@ export default Vue.extend({
 
   data: () => ({
     valid: true,
-    username: "" as string,
+    email: "" as string,
     password: "" as string,
     lazy: false
   }),
@@ -59,16 +59,16 @@ export default Vue.extend({
   methods: {
     ...mapActions(["login"]),
 
-    onSubmit() {
+    async onSubmit() {
       try {
-        const { username, password } = this;
+        const { email, password } = this;
         // this.$refs.form.validate();
 
-        this.login({ username, password });
+        await this.login({ email, password });
         this.$notify.success("Ура, вошли успешно");
       } catch (error) {
-        console.log(error);
-        this.$notify.error("Приехали, блин, ошибка!");
+        // console.log(error);
+        this.$notify.error(error, { title: "Приехали, блин, ошибка!" });
       }
     }
   }
